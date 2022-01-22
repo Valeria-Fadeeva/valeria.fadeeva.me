@@ -1,3 +1,4 @@
 *.sqlite
 /vendor
 /public/vendor
+composer.lock
