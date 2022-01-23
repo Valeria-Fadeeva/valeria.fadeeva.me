@@ -17,6 +17,8 @@
   --main-card-active-text-color: rgb(201, 209, 217);
   --main-card-deactive-text-color: rgba(236, 236, 236, 0.4);
   --main-card-border-color: rgb(48, 54, 61);
+
+  --main-width: 60vw;
 }
 
 html {
@@ -80,21 +82,6 @@ h3 {
   line-height: 1rem;
 }
 
-video {
-  /* override other styles to make responsive */
-  width: 100% !important;
-  height: auto !important;
-}
-
-.video_youtube {
-  width: fit-content !important;
-  height: fit-content !important;
-  max-width: fit-content !important;
-  max-height: fit-content !important;
-  text-align: center;
-  margin: 0 auto;
-}
-
 a,
 a:link,
 a:visited {
@@ -104,6 +91,53 @@ a:hover {
   color: rgb(100, 255, 100);
 }
 
-.footer-link {
-  color: var(--main-text-color);
+video {
+  /* override other styles to make responsive */
+  width: 100% !important;
+  height: auto !important;
+}
+
+.video_youtube {
+  position: relative;
+  width: 100%;
+  height: 0;
+  overflow: hidden;
+  padding-bottom: 56.25%;
+}
+
+.video_youtube iframe[width][height] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+  border: 0;
+}
+
+/*iframe[src*="youtube"] {
+  max-width: 100%;
+  height: 100%;
+}*/
+
+[style*="--aspect-ratio"] > :first-child {
+  width: 100%;
+}
+[style*="--aspect-ratio"] > img {
+  height: auto;
+}
+@supports (--custom: property) {
+  [style*="--aspect-ratio"] {
+    position: relative;
+  }
+  [style*="--aspect-ratio"]::before {
+    content: "";
+    display: block;
+    padding-bottom: calc(100% / (var(--aspect-ratio)));
+  }
+  [style*="--aspect-ratio"] > :first-child {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+  }
 }

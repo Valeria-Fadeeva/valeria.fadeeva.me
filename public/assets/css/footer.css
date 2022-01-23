@@ -9,6 +9,12 @@
 	line-height: 1rem;	
 }
 
+.footer a,
+.footer a:link,
+.footer a:visited {
+	color: var(--main-text-color);
+}
+
 .scroll-panel {
 	display: none;
 }
