@@ -20,8 +20,8 @@ class TestConnDB extends SQLite3
 		if (file_exists($this->filename)) {
 			if (!is_writable($this->filename)) {
 				throw new Exception('Файл БД недоступен для записи ' . $this->filename);
-			} 
-		}	
+			}
+		}
 
 		$this->open($this->filename);
     }
@@ -61,7 +61,7 @@ if (empty($check)) {
 			}
 		}
 
-		fclose($handle);	
+		fclose($handle);
 	}
 
 	$pdo->beginTransaction();
@@ -75,21 +75,21 @@ if (empty($check)) {
 	}
 } else {
 	$sql = "
-	SELECT `post`.`id` AS `p_id`, 
-	`post`.`type` AS `p_type`, 
-	`post`.`header` AS `p_header`, 
-	`post`.`content` AS `p_content`, 
-	`post`.`table_of_contents` AS `p_table_of_contents`, 
-	`post`.`date` AS `p_date`, 
-	`post`.`column` AS `p_col`, 
-	`post_type`.`id` AS `pt_id`, 
-	`post_type`.`type` AS `pt_type` 
+	SELECT `post`.`id` AS `p_id`,
+	`post`.`type` AS `p_type`,
+	`post`.`header` AS `p_header`,
+	`post`.`content` AS `p_content`,
+	`post`.`table_of_contents` AS `p_table_of_contents`,
+	`post`.`date` AS `p_date`,
+	`post`.`column` AS `p_col`,
+	`post_type`.`id` AS `pt_id`,
+	`post_type`.`type` AS `pt_type`
 	FROM `post` LEFT OUTER JOIN `post_type` ON `post`.`type` = `post_type`.`id`
 	WHERE `post`.`hidden` IS NOT TRUE ORDER BY date(`p_date`) ASC LIMIT 0, 30";
 
 	$posts = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
-	$tpl_page = 
+	$tpl_page =
 	"					<div class='blog-post clearfix'>
 							<h4 class='blog-post-title'>Планы</h2>
 							<p class='blog-post-meta'></p>
@@ -112,13 +112,13 @@ if (empty($check)) {
 						</div>
 	";
 
-	$tpl_row = 
+	$tpl_row =
 	"						<div class='row'>
 	{col}
 							</div>
 	";
 
-	$tpl_col = 
+	$tpl_col =
 	"							<div class='col {class}'>
 									<form>
 										<input type='hidden' value='{p_id}'>
@@ -142,12 +142,12 @@ if (empty($check)) {
 								</div>
 	";
 
-	$tpl_empty_col = 
+	$tpl_empty_col =
 	"							<div class='col {class}'>
 								</div>
 	";
 
-	$tpl_progress = 
+	$tpl_progress =
 	"											<div class='card-text progress'>
 													<div class='progress-bar progress-bar-striped progress-bar-animated bg-success' 
 													role='progressbar' 
@@ -166,13 +166,13 @@ if (empty($check)) {
 												<br>
 	";
 
-	$table_of_contents_tpl = 
+	$table_of_contents_tpl =
 	"											<div class='card-text'>
 	{accordion_tpl}
 												</div>
 	";
 
-	$accordion_tpl = 
+	$accordion_tpl =
 	"												<div class='accordion accordion-flush' id='accordion_flush_{view_post_id}'>
 														<div class='accordion-item'>
 															<h2 class='accordion-header' id='flush-heading_{view_post_id}'>
@@ -211,13 +211,13 @@ if (empty($check)) {
 
 			if (is_array($p_content_arr) AND count($p_content_arr) == 2) {
 				$progress = str_replace(
-				array('{progress_cur}', '{progress_max}', '{days_cur}', '{days_max}', 
-					'{weeks_estimate}'), 
-				array($p_content_arr[0], $p_content_arr[1], round($p_content_arr[0]/25/1.66), round($p_content_arr[1]/25/1.66), 
+				array('{progress_cur}', '{progress_max}', '{days_cur}', '{days_max}',
+					'{weeks_estimate}'),
+				array($p_content_arr[0], $p_content_arr[1], round($p_content_arr[0]/25/1.66), round($p_content_arr[1]/25/1.66),
 					round(
 						($p_content_arr[1]/25/1.66 - $p_content_arr[0]/25/1.66) * 2 / 7
 						)
-					), 
+					),
 				$tpl_progress);
 			}
 		}
@@ -246,8 +246,8 @@ if (empty($check)) {
 
 		if (!empty($table_of_contents)) {
 			$accordion_block = str_replace(
-			array("{table_of_contents}", "{view_post_id}"), 
-			array($table_of_contents, $view_post_id), 
+			array("{table_of_contents}", "{view_post_id}"),
+			array($table_of_contents, $view_post_id),
 			$accordion_tpl);
 
 			$table_of_contents_block = str_replace(
@@ -284,8 +284,8 @@ if (empty($check)) {
 		}
 		
 		$col_block = str_replace(
-		array("{p_id}", "{pt_type}", "{p_header}", "{p_content}", "{table_of_contents_block}", "{p_date}", "{date_human_month}", "{class}", "{progress}"), 
-		array($sql_row['p_id'], $sql_row['pt_type'], $sql_row['p_header'], $sql_row['p_content'], $table_of_contents_block, $p_date, $date_human_month, $html_class, $progress), 
+		array("{p_id}", "{pt_type}", "{p_header}", "{p_content}", "{table_of_contents_block}", "{p_date}", "{date_human_month}", "{class}", "{progress}"),
+		array($sql_row['p_id'], $sql_row['pt_type'], $sql_row['p_header'], $sql_row['p_content'], $table_of_contents_block, $p_date, $date_human_month, $html_class, $progress),
 		$tpl_col);
 		
 		$col_array[$p_date][] = array($col_block, $sql_row['p_col']);
@@ -299,13 +299,13 @@ if (empty($check)) {
 	$empty_col_order_block_array = array();
 
 	$empty_col_order_block_array[] = str_replace(
-	"{class}", 
-	$html_class_1, 
+	"{class}",
+	$html_class_1,
 	$tpl_empty_col);
 
 	$empty_col_order_block_array[] = str_replace(
-	"{class}", 
-	$html_class_2, 
+	"{class}",
+	$html_class_2,
 	$tpl_empty_col);
 
 	foreach($col_array as $html_col) {
